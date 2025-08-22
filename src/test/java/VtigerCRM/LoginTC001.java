@@ -14,6 +14,7 @@ public class LoginTC001 {
 		driver.manage().window().maximize();
 		driver.get("http://localhost:8888/index.php?action=Login&module=Users");
 		Thread.sleep(1000);
+		//pankaj
 		
 		WebElement username=driver.findElement(By.xpath("//input[@name=\"user_name\"]"));
 		username.sendKeys("admin");
