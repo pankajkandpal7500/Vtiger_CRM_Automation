@@ -6,6 +6,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,23 +17,22 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 public class LoginTC001 {
-
 	public static void main(String[] args) throws InterruptedException, IOException {
 		WebDriver driver = null;
-
 		FileInputStream fis = new FileInputStream(
 				"C:\\Users\\HP\\Pictures\\javaprograms\\SeleniumProjectWinners\\my-testcases\\src\\test\\resource\\commomdata.properties");
+		FileInputStream fis1 = new FileInputStream(
+				"C:\\Users\\HP\\Pictures\\javaprograms\\SeleniumProjectWinners\\my-testcases\\src\\test\\resource\\TestOne.properties");
 		Properties pobj = new Properties();
-		pobj.load(fis);
-
+		pobj.load(fis); 
+		Workbook wb=WorkbookFactory.create(fis1);
+		int sh=wb.getSheetIndex("TestData");
 		// step 3> get the value by passing the keys
 		String BROWSER = pobj.getProperty("bro");
 		String URL = pobj.getProperty("url");
 		String USERNAME = pobj.getProperty("un");
 		String PASSWORD = pobj.getProperty("pwd");
-
 		if (BROWSER.equalsIgnoreCase("chrome")) {
 			driver = new ChromeDriver();
 		} else if (BROWSER.equalsIgnoreCase("firefox")) {
@@ -42,13 +44,11 @@ public class LoginTC001 {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 		driver.get(URL);
-
 		WebElement username = driver.findElement(By.xpath("//input[@name=\"user_name\"]"));
 		username.sendKeys(USERNAME);
-
 		WebElement password = driver.findElement(By.xpath("//input[@name=\"user_password\"]"));
 		password.sendKeys(PASSWORD);
-
+							
 		WebElement login = driver.findElement(By.id("submitButton"));
 		login.click();
 
@@ -57,16 +57,11 @@ public class LoginTC001 {
 		driver.findElement(By.xpath("//img[@title='Create Organization...']")).click();
 
 		// find the account element and add qspider+random 4 digit number to adjust
-		// conflict
 		String organisationname = "qspiders_" + (int) (Math.random() * 9999);
 		WebElement orgField = driver.findElement(By.name("accountname"));
 		orgField.sendKeys(organisationname);
 
-		// WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); //
-		// Waits up to 10 seconds
-
 		// Rating dropdown Handling
-
 		WebElement Rate = driver.findElement(By.name("rating"));
 
 		Select slc = new Select(Rate);
