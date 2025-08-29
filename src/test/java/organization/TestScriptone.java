@@ -1,53 +1,30 @@
-package VtigerCRM;
-
-import java.io.FileInputStream;
-import java.io.IOException;
+package organization;
 import java.time.Duration;
 import java.util.List;
-import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginTC001 {
+public class TestScriptone {
 
-	public static void main(String[] args) throws InterruptedException, IOException {
-		WebDriver driver = null;
-
-		FileInputStream fis = new FileInputStream(
-				"C:\\Users\\HP\\Pictures\\javaprograms\\SeleniumProjectWinners\\my-testcases\\src\\test\\resource\\commomdata.properties");
-		Properties pobj = new Properties();
-		pobj.load(fis);
-
-		// step 3> get the value by passing the keys
-		String BROWSER = pobj.getProperty("bro");
-		String URL = pobj.getProperty("url");
-		String USERNAME = pobj.getProperty("un");
-		String PASSWORD = pobj.getProperty("pwd");
-
-		if (BROWSER.equalsIgnoreCase("chrome")) {
-			driver = new ChromeDriver();
-		} else if (BROWSER.equalsIgnoreCase("firefox")) {
-			driver = new FirefoxDriver();
-		} else {
-			System.out.println("❌ Browser not supported!");
-			return;
-		}
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-		driver.get(URL);
 
+		
+		// Login to application
+		driver.get("http://localhost:8888/");
 		WebElement username = driver.findElement(By.xpath("//input[@name=\"user_name\"]"));
-		username.sendKeys(USERNAME);
+		username.sendKeys("admin");
 
 		WebElement password = driver.findElement(By.xpath("//input[@name=\"user_password\"]"));
-		password.sendKeys(PASSWORD);
+		password.sendKeys("manager");
 
 		WebElement login = driver.findElement(By.id("submitButton"));
 		login.click();
@@ -58,12 +35,12 @@ public class LoginTC001 {
 
 		// find the account element and add qspider+random 4 digit number to adjust
 		// conflict
-		String organisationname = "qspiders_" + (int) (Math.random() * 9999);
+		String organisationname = "qspiders_" + (int) (Math.random()*9999);
 		WebElement orgField = driver.findElement(By.name("accountname"));
 		orgField.sendKeys(organisationname);
 
-		// WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); //
-		// Waits up to 10 seconds
+
+		//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Waits up to 10 seconds
 
 		// Rating dropdown Handling
 
@@ -80,9 +57,9 @@ public class LoginTC001 {
 		}
 
 		driver.findElement(By.xpath("//input[@value='  Save  ']")).click();
-
-		// Verification.....
-
+		
+		//Verification.....
+		
 		String actOrgName = driver.findElement(By.id("dtlview_Organization Name")).getText();
 		if (actOrgName.equals(organisationname)) {
 			System.out.println("Organization created successfully!!!");
@@ -101,7 +78,7 @@ public class LoginTC001 {
 
 		Thread.sleep(3000);
 
-		driver.quit();
+		//driver.quit();
 
 	}
 
