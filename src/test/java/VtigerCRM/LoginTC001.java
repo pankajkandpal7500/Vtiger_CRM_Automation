@@ -1,6 +1,4 @@
 package VtigerCRM;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -17,22 +15,25 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import generic_utility.FileUtility;
 public class LoginTC001 {
 	public static void main(String[] args) throws InterruptedException, IOException {
+		
+		 
+		FileUtility fUtil = new FileUtility();
+		
+		String BROWSER = fUtil.getDataFromProperties("bro");
+		String URL = fUtil.getDataFromProperties("url");
+		String USERNAME = fUtil.getDataFromProperties("un");
+		String PASSWORD = fUtil.getDataFromProperties("pwd");
+		
+		String orgName = fUtil.getDataFromexcelFile("Org", 1, 0) + (int)(Math.random()*9999);
+		System.out.println(orgName);
+
 		WebDriver driver = null;
-		FileInputStream fis = new FileInputStream(
-				"C:\\Users\\HP\\Pictures\\javaprograms\\SeleniumProjectWinners\\my-testcases\\src\\test\\resource\\commomdata.properties");
-		FileInputStream fis1 = new FileInputStream(
-				"C:\\Users\\HP\\Pictures\\javaprograms\\SeleniumProjectWinners\\my-testcases\\src\\test\\resource\\TestOne.properties");
-		Properties pobj = new Properties();
-		pobj.load(fis); 
-		Workbook wb=WorkbookFactory.create(fis1);
-		int sh=wb.getSheetIndex("TestData");
-		// step 3> get the value by passing the keys
-		String BROWSER = pobj.getProperty("bro");
-		String URL = pobj.getProperty("url");
-		String USERNAME = pobj.getProperty("un");
-		String PASSWORD = pobj.getProperty("pwd");
+
+		
 		if (BROWSER.equalsIgnoreCase("chrome")) {
 			driver = new ChromeDriver();
 		} else if (BROWSER.equalsIgnoreCase("firefox")) {
