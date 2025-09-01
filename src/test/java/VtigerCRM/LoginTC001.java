@@ -55,7 +55,7 @@ public class LoginTC001 {
 		WebElement login = driver.findElement(By.id("submitButton"));
 		login.click();
 
-		// click on organization
+		// click on organization and create organization
 		driver.findElement(By.xpath("//a[text()='Organizations']")).click();
 		driver.findElement(By.xpath("//img[@title='Create Organization...']")).click();
 
