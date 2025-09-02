@@ -88,7 +88,7 @@ public class LoginTC001 {
 			System.out.println("Organization could not be created successfully!!!");
 		}
 
-		// Logout from application
+		// Logout from application from web
 		WebElement signout = driver.findElement(By.xpath("//img[@src=\"themes/softed/images/user.PNG\"]"));
 		Actions act = new Actions(driver);
 		act.moveToElement(signout).perform();
